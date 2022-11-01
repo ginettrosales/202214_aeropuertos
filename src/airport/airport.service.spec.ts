@@ -93,26 +93,4 @@ describe('AirportService', () => {
     expect(storedAirport.name).toEqual(airport.name)
     expect(storedAirport.country).toEqual(airport.country)
   });
- 
-  it('update devuelve una execepcion por aeropuerto invalido', async () => {
-    let airport: AirportEntity = airportsList[0];
-    airport = {
-      ...airport, name: "Nuevo nombre", country: "Nuevo pais"
-    }
-    await expect(() => service.update(0, airport)).rejects.toHaveProperty("message", "The airport with the given id was not found")
-  });
-
-  it('delete elimina un aeropuerto', async () => {
-    const airport: AirportEntity = airportsList[0];
-    await service.delete(airport.id);
-  
-    const deletedAirport: AirportEntity = await repository.findOne({ where: { id: airport.id } })
-    expect(deletedAirport).toBeNull();
-  });
-
-  it('delete devuelve una execepcion por aeropuerto invalido', async () => {
-    const airport: AirportEntity = airportsList[0];
-    await service.delete(airport.id);
-    await expect(() => service.delete(0)).rejects.toHaveProperty("message", "The airport with the given id was not found")
-  });
 });
